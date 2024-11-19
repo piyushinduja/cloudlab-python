@@ -13,6 +13,7 @@ request = pc.makeRequestRSpec()
 for i in range(params.nodeCount):
     node = request.RawPC("node" + str(i))
     node.disk_image = "urn:publicid:IDN+wisc.cloudlab.us+image+distribml-PG0:small-lan.node0"
+    node.addService(pg.Execute(shell="sh", command="pwd"))
     node.addService(pg.Execute(shell="sh", command="/local/repository/setup.sh"))
 
 # Output the request RSpec
