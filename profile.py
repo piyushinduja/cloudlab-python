@@ -15,7 +15,6 @@ for i in range(params.nodeCount):
     node.disk_image = "urn:publicid:IDN+wisc.cloudlab.us+image+distribml-PG0:small-lan.node0"
     node.addService(pg.Execute(shell='sh', command="echo {} > /local/node_rank".format(i)))
     node.addService(pg.Execute(shell='sh', command="echo {} > /local/node_count".format(params.nodeCount)))
-    node.addService(pg.Execute(shell='sh', command="chmod +x /local/repository/setup.sh && ls -l /local/repository/setup.sh > /local/repository/permissions.log"))
     node.addService(pg.Execute(shell='sh', command="sudo chmod +x /local/repository/setup.sh"))
     node.addService(pg.Execute(shell="sh", command="/local/repository/setup.sh"))
 
