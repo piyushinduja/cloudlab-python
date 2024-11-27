@@ -13,7 +13,13 @@ request = pc.makeRequestRSpec()
 for i in range(params.nodeCount):
     node = request.RawPC("node" + str(i))
     node.disk_image = "urn:publicid:IDN+wisc.cloudlab.us+image+distribml-PG0:small-lan.node0"
-    node.addService(pg.Execute(shell='sh', command="export MASTER_ADDR=10.10.1.1 && export MASTER_PORT=29500 && export WORLD_SIZE={} && export RANK={} && env > /local/repository/env_log.txt".format(params.nodeCount, i)))
+    command="""\
+    echo "MASTER_ADDR=10.10.1.1" | sudo tee -a /etc/environment;
+    echo "MASTER_PORT=29500" | sudo tee -a /etc/environment;
+    echo "WORLD_SIZE={}" | sudo tee -a /etc/environment;
+    echo "RANK={}" | sudo tee -a /etc/environment;
+    """.format(params.nodeCount, i)
+    # node.addService(pg.Execute(shell='sh', command="export MASTER_ADDR=10.10.1.1 && export MASTER_PORT=29500 && export WORLD_SIZE={} && export RANK={} && env > /local/repository/env_log.txt".format(params.nodeCount, i)))
     # node.addService(pg.Execute(shell='sh', command="echo {} > /local/node_rank".format(i)))
     # node.addService(pg.Execute(shell='sh', command="echo {} > /local/node_count".format(params.nodeCount)))
     # node.addService(pg.Execute(shell='sh', command="chmod +x /local/repository/setup.sh"))
